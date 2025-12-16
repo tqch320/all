@@ -2460,7 +2460,10 @@
                 const snap = await getDoc(doc(db, "artifacts", appId, "users", userId, "playerData", "save"));
                 if (snap.exists()) {
                     const d = snap.data();
-                    state.playerName = d.name || "Noob"; state.playerType = d.type || "neko"; state.maxLevel = d.maxLvl || 1;
+                    state.playerName = d.name || "Noob"; state.playerType = d.type || "neko";
+                    // ALWAYS START FROM LEVEL 1 - don't load maxLevel progress
+                    state.maxLevel = 1;
+                    state.currentLevel = 1;
                     document.getElementById('name-input').value = state.playerName;
                     document.getElementById('btn-start').disabled = false;
                     document.getElementById('btn-start').classList.remove('opacity-50', 'cursor-not-allowed');
