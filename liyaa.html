@@ -751,7 +751,7 @@
 
                 // LEVEL 6: TUMBUKAN LENTING SEBAGIAN (KECEPATAN PANTUL)
                 {
-                    id: 6, x: 5600, type: 'calc', visual: 'mud',
+                    id: 6, x: 5600, type: 'calc', visual: 'portal',
                     question: "Sebuah benda jatuh bebas dari ketinggian 80 m di atas tanah. Jika tumbukan yang terjadi dengan tanah adalah lenting sebagian (e = 0.2), kecepatan pantul benda setelah tumbukan adalah (m/s)?",
                     options: {
                         input: { correctValue: 7.92, tolerance: 0.05, unit: 'm/s' },
@@ -1443,7 +1443,33 @@
                             ctx.fillStyle = 'white'; ctx.shadowBlur=4;
                             ctx.fillText("GUNUNG TINGGI", 0, 5);
 
-                    } else if (g.visual === 'truck') {
+                        } else if (g.visual === 'portal') {
+                            // Portal aneh - lingkaran bercahaya
+                            const pW = 120;
+                            // Glow dasar
+                            ctx.save();
+                            const grad = ctx.createRadialGradient(0, -20, 10, 0, -20, pW/2);
+                            grad.addColorStop(0, 'rgba(124, 58, 237, 0.95)');
+                            grad.addColorStop(0.4, 'rgba(99, 102, 241, 0.8)');
+                            grad.addColorStop(1, 'rgba(79, 70, 229, 0.15)');
+                            ctx.fillStyle = grad; ctx.shadowBlur = 30; ctx.shadowColor = '#7c2de5';
+                            ctx.beginPath(); ctx.ellipse(0, -20, pW/2, pW/3, 0, 0, Math.PI*2); ctx.fill();
+                            // Inner swirl rings
+                            ctx.shadowBlur = 0; ctx.strokeStyle = 'rgba(255,255,255,0.12)'; ctx.lineWidth = 2;
+                            for(let i=0;i<3;i++){
+                                ctx.beginPath(); ctx.ellipse(0, -20, pW/4 - i*10, (pW/6) - i*6, i*0.2, 0, Math.PI*2); ctx.stroke();
+                            }
+                            // Center core
+                            ctx.fillStyle = '#c084fc'; ctx.beginPath(); ctx.arc(0, -20, 16, 0, Math.PI*2); ctx.fill();
+                            // Partikel kecil mengapung
+                            ctx.fillStyle = 'rgba(255,255,255,0.85)';
+                            [[-30,-30],[-10,-10],[20,-40],[10,5],[-20,10]].forEach(pos=>{ ctx.beginPath(); ctx.arc(pos[0], pos[1], 3, 0, Math.PI*2); ctx.fill(); });
+                            ctx.restore();
+                            // TEKS DI TENGAH
+                            ctx.fillStyle = 'white'; ctx.shadowBlur=6;
+                            ctx.fillText("PORTAL ANEH", 0, 5);
+
+                        } else if (g.visual === 'truck') {
                         ctx.fillStyle = '#e11d48'; ctx.shadowBlur=0;
                         ctx.fillRect(-30, -100, 60, 200);
                         ctx.strokeStyle = '#881337'; ctx.lineWidth = 2; ctx.strokeRect(-30, -100, 60, 200);
@@ -1889,6 +1915,9 @@
             } else if (visualType === 'mud') {
                 // Lumpur
                 startOffset = -90; endOffset = 90;
+            } else if (visualType === 'portal') {
+                // Portal aneh (lebar ~120px)
+                startOffset = -80; endOffset = 80; duration = 1800;
             } else if (visualType === 'fire') {
                 // Lubang Api (lebar 100px)
                 startOffset = -70; endOffset = 70; duration = 2000;
