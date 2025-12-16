@@ -1233,7 +1233,8 @@
 
             // Finish Line Trigger Visual
             state.triggers.forEach(t => {
-                if (t.active && t.id === 12 && t.x > renderStartX - 100 && t.x < renderEndX + 100) {
+                // Draw finish for any active trigger (finish checkpoint)
+                if (t.active && t.x > renderStartX - 100 && t.x < renderEndX + 100) {
                     const tY = getRoadCurve(t.x);
                     const boxSize = 20;
                     for (let i = 0; i < ROAD_HEIGHT / boxSize; i++) {
@@ -1312,6 +1313,22 @@
                         // TEKS DI TENGAH
                         ctx.fillStyle = 'white'; ctx.shadowBlur=4;
                         ctx.fillText("SUNGAI DERAS", 0, 5);
+
+                    } else if (g.visual === 'gate') {
+                        // Finish gate / arch
+                        const archW = 220;
+                        const archH = 120;
+                        // Pillars
+                        ctx.fillStyle = '#ef4444'; ctx.shadowBlur = 0;
+                        ctx.fillRect(-archW/2, -ROAD_HALF - archH, 20, archH);
+                        ctx.fillRect(archW/2 - 20, -ROAD_HALF - archH, 20, archH);
+                        // Top beam
+                        ctx.fillStyle = '#fde047'; ctx.fillRect(-archW/2 + 20, -ROAD_HALF - archH - 20, archW - 40, 20);
+                        // Banner text
+                        ctx.fillStyle = '#111827'; ctx.font = 'bold 22px Fredoka'; ctx.textAlign = 'center'; ctx.fillText('FINISH', 0, -ROAD_HALF - archH - 6);
+                        // Decorative flags
+                        ctx.fillStyle = '#ef4444'; ctx.beginPath(); ctx.moveTo(-archW/2 + 10, -ROAD_HALF - archH); ctx.lineTo(-archW/2 + 40, -ROAD_HALF - archH + 8); ctx.lineTo(-archW/2 + 10, -ROAD_HALF - archH + 16); ctx.fill();
+                        ctx.beginPath(); ctx.moveTo(archW/2 - 10, -ROAD_HALF - archH); ctx.lineTo(archW/2 - 40, -ROAD_HALF - archH + 8); ctx.lineTo(archW/2 - 10, -ROAD_HALF - archH + 16); ctx.fill();
 
                     } else if (g.visual === 'boulder') {
                         ctx.fillStyle = '#4b5563'; ctx.shadowBlur=0; ctx.strokeStyle = '#1f2937'; ctx.lineWidth = 2;
