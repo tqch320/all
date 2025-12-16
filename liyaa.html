@@ -762,7 +762,7 @@
 
                 // LEVEL 7: TUMBUKAN LENTING SEBAGIAN (TINGGI PANTUL BERURUTAN)
                 {
-                    id: 7, x: 6200, type: 'calc', visual: 'mud',
+                    id: 7, x: 6200, type: 'calc', visual: 'mountain',
                     question: "Tumbukan Lenting Sebagian\nSebuah bola basket jatuh dari ketinggian 6,25 m lalu memantul kembali hingga ketinggian 4,5 m. Tentukan tinggi pantulan bola basket berikutnya (m)!",
                     options: { input: { correctValue: 3.24, tolerance: 0.05, unit: 'm' }, feedback: { correct: 'Benar — h_next = e² × h_current', wrong: 'Ingat: e² = h2/h1; h3 = e² × h2' }, explanation: 'h2/h1 = 4.5/6.25 = 0.72 -> h3 = 0.72 × 4.5 = 3.24 m' }
                 },
@@ -1409,6 +1409,40 @@
                         ctx.fillStyle = 'white'; ctx.shadowBlur=4;
                         ctx.fillText("LUBANG API", 0, 5);
 
+                        } else if (g.visual === 'mountain') {
+                            ctx.fillStyle = '#7c2d12';
+                            ctx.beginPath();
+                            ctx.moveTo(-80, ROAD_HALF);
+                            ctx.lineTo(-20, -80);
+                            ctx.lineTo(0, -30);
+                            ctx.lineTo(30, -90);
+                            ctx.lineTo(50, -20);
+                            ctx.lineTo(90, -60);
+                            ctx.lineTo(100, ROAD_HALF);
+                            ctx.fill();
+                            ctx.strokeStyle = '#451a03'; ctx.lineWidth = 2;
+                            ctx.beginPath();
+                            ctx.moveTo(-80, ROAD_HALF);
+                            ctx.lineTo(-20, -80);
+                            ctx.lineTo(0, -30);
+                            ctx.lineTo(30, -90);
+                            ctx.lineTo(50, -20);
+                            ctx.lineTo(90, -60);
+                            ctx.lineTo(100, ROAD_HALF);
+                            ctx.stroke();
+                            ctx.fillStyle = '#f5f5f5';
+                            ctx.beginPath();
+                            ctx.arc(-20, -80, 10, 0, Math.PI*2);
+                            ctx.fill();
+                            ctx.beginPath();
+                            ctx.arc(30, -90, 12, 0, Math.PI*2);
+                            ctx.fill();
+                            ctx.beginPath();
+                            ctx.arc(90, -60, 9, 0, Math.PI*2);
+                            ctx.fill();
+                            ctx.fillStyle = 'white'; ctx.shadowBlur=4;
+                            ctx.fillText("GUNUNG TINGGI", 0, 5);
+
                     } else if (g.visual === 'truck') {
                         ctx.fillStyle = '#e11d48'; ctx.shadowBlur=0;
                         ctx.fillRect(-30, -100, 60, 200);
@@ -1858,6 +1892,9 @@
             } else if (visualType === 'fire') {
                 // Lubang Api (lebar 100px)
                 startOffset = -70; endOffset = 70; duration = 2000;
+                } else if (visualType === 'mountain') {
+                    // Gunung (lebar ~180px)
+                    startOffset = -100; endOffset = 100; duration = 3000;
             } else if (visualType === 'slime') {
                 // Slime kecil
                 startOffset = -50; endOffset = 50;
